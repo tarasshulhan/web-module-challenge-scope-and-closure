@@ -29,10 +29,20 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   
   1. What is the difference between counter1 and counter2?
   
+    Count is global in counter2 and there is only one function; count is local 
+    in counter1, and there are 2 nested functions.
+
   2. Which of the two uses a closure? How can you tell?
+
+    Counter1 uses closure because there are 2 nested functions, and the child
+    function is accesing a variable of the parent function.
   
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+
+     Counter 1 would be preferable if the counter function needed to be reused many times
+     throughout the code or if you needed many counters running in parallel. Counter 2 would be prefferable if
+     you needed to access the same count variable from multiple functions.
 */
 
 // counter1 code
@@ -62,10 +72,10 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+    return Math.round(Math.random()*2);
 }
-
+// console.log(inning());
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -81,8 +91,18 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+function finalScore(inning_cb, num_innings){
+  let temp = {
+    'Home' : 0,
+    'Away' : 0
+  }
+
+  for(let i = 0; i < num_innings; i++){
+    temp.Home = temp.Home + inning_cb();
+    temp.Away = temp.Away + inning_cb();
+  }
+
+  return temp;
 }
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
@@ -90,8 +110,11 @@ Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(inning_cb) {
+  return {
+    'Home' : inning_cb(),
+    'Away' : inning_cb()
+  }
 }
 
 
